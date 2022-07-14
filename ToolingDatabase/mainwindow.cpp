@@ -120,8 +120,7 @@ void MainWindow::setCurrentFile(const QString &fileName) {
 	this->curFile = QFileInfo(fileName).canonicalFilePath();
   }
   this->tableName = PREFIX + QFileInfo(this->curFile).baseName();
-  this->setWindowModified(
-	  false);  //функция предопределена, утанавливает флаг был ли изменен документ
+  this->setWindowModified(false);
   this->setWindowTitle(this->tableName);
 }
 
@@ -130,10 +129,9 @@ bool MainWindow::maybeSave() {
 	  QMessageBox::Warning, tr("Сохранение изменений"), tr("Сохранить изменения"),
 	  QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, this);
 
-  // TODO кнопки
-  //   box->addButton(QMessageBox::Save, tr("СОХРАНИТЬ"));
-  //   box->addButton(QMessageBox::Discard, tr("НЕ СОХРАНЯТЬ"));
-  //   box->addButton(QMessageBox::Cancel, tr("ОТМЕНА"));
+  box->setButtonText(QMessageBox::Save, tr("СОХРАНИТЬ"));
+  box->setButtonText(QMessageBox::Discard, tr("НЕ СОХРАНЯТЬ"));
+  box->setButtonText(QMessageBox::Cancel, tr("ОТМЕНА"));
 
   switch (box->exec()) {
 	case QMessageBox::Save:
@@ -213,13 +211,13 @@ void MainWindow::loadFile(const QString &fileName) {
 }
 
 void MainWindow::writeSettings() {
-  QSettings settings("РКК", "ОТПИ");
+  QSettings settings("ToolingDatabase", "MY");
   settings.setValue("pos", this->pos());  //установит текущее положение на экране
   settings.setValue("size", this->size());	//установит текуций размер
 }
 
 void MainWindow::readSettings() {
-  QSettings settings("РКК", "ОТПИ");
+  QSettings settings("ToolingDatabase", "MY");
   QPoint pos = settings.value("pos", QPoint(200, 200))
 				   .toPoint();	//начальные настройки положения
   QSize size = settings.value("size", QSize(400, 400))
@@ -257,10 +255,8 @@ bool MainWindow::saveAs() {
   QString newNameTable = PREFIX + QFileInfo(fileName).baseName();
   if (!this->mySearchTableInDataBase(newNameTable)) {
 	if (isUntitled && (this->curFile == "noName.otpi")) {
-	  if (this->copyInSaveTableIsNoNameTable(
-			  newNameTable))  //если таблица удачно переименована с нонейм, сохраняем
-							  //файл!!!!!!!!!!!!!
-	  {
+	  //если таблица удачно переименована с нонейм, сохраняем файл
+	  if (this->copyInSaveTableIsNoNameTable(newNameTable)) {
 		this->saveFile(fileName);
 		return true;
 	  } else {
@@ -364,7 +360,6 @@ void MainWindow::createViewTableAndSqlModel(const QString &tableName) {
   // cкрыть ID
   //Весь вывод через прокси модель !!!!!!
   this->createSortProxyModel(QRegularExpression());
-  // this->ui->tableViewUi->setModel(mySqlTableModel);
   this->ui->tableViewUi->setModel(this->sortModel);
   // cкрыть ID в отображении!!!
   this->ui->tableViewUi->setColumnHidden(0, true);
@@ -387,10 +382,9 @@ void MainWindow::on_actionPasteRow_triggered() {
   int numRowSelected = this->ui->tableViewUi->currentIndex().row();
   if (numRowSelected == 0) {
 	int row = this->mySqlTableModel->rowCount();
-	this->mySqlTableModel->insertRow(row++);  //++row - добавит в начало списка
+	this->mySqlTableModel->insertRow(row++);
   } else {
-	this->mySqlTableModel->insertRow(
-		++numRowSelected);	// numRowSelected++ - добавит над выделенной строкой
+	this->mySqlTableModel->insertRow(++numRowSelected);
   }
 }
 
@@ -497,12 +491,7 @@ bool MainWindow::on_actionConvertToCSV_triggered() {
   return false;
 }
 
-void MainWindow::on_tableViewUi_pressed(
-	const QModelIndex &index)  //вспомогательная функция, убрать на релиз-версии
-{
-  if (index.isValid()) {
-  }	 //чушь от желтых треугольников
-}
+void MainWindow::on_tableViewUi_pressed([[maybe_unused]] const QModelIndex &index) {}
 
 void MainWindow::on_tableViewUi_doubleClicked(const QModelIndex &index) {
   this->myEditForm = new MyForm();
@@ -514,25 +503,20 @@ void MainWindow::on_tableViewUi_doubleClicked(const QModelIndex &index) {
 }
 
 void MainWindow::on_actionPrinter_triggered() {
-  // TODO переписать
-  //  QPrinter *myPrinter = new QPrinter(QPrinter::PrinterResolution);
-  //  myPrinter->setPaperSize(QPrinter::A4);
-  //  myPrinter->setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
-  //  myPrinter->setPageOrientation(QPageLayout::Landscape);
-  //  QPrintPreviewDialog *prew = new QPrintPreviewDialog(myPrinter, this);
-  //  prew->setWindowTitle(tr("ПРЕДПРОСМОТР"));
-  //  prew->setMinimumSize(QSize(1000, 700));
-
-  //  connect(prew, SIGNAL(paintRequested(QPrinter *)), this, SLOT(printPreview(QPrinter
-  //  *))); prew->exec();
+  QPrinter *myPrinter = new QPrinter(QPrinter::PrinterResolution);
+  myPrinter->setPageSize(QPageSize::A4);
+  myPrinter->setFullPage(true);
+  myPrinter->setPageOrientation(QPageLayout::Landscape);
+  myPrinter->setPageMargins({0, 0, 0, 0});
+  QPrintPreviewDialog *prew = new QPrintPreviewDialog(myPrinter, this);
+  connect(prew, SIGNAL(paintRequested(QPrinter *)), this, SLOT(printPreview(QPrinter *)));
+  prew->exec();
 }
 
 void MainWindow::printPreview(QPrinter *myPrinter) {
   QAbstractItemModel *model = this->ui->tableViewUi->model();
   qDebug() << "Пустая модель? " << model;
 
-  //**********************************************************************
-  //ВЕРСИЯ ЧЕРЕЗ HTML
   if (model) {
 	QHeaderView *hHeader = this->ui->tableViewUi->horizontalHeader();
 	QString myHtml = "";
@@ -551,7 +535,6 @@ void MainWindow::printPreview(QPrinter *myPrinter) {
 	  myHtml += tr("Оснастка, учтенная отделом ОТПИ КИС-416Ц, по состоянию на: ");
 	  myHtml += QDate::currentDate().toString("dd.MM.yyyy");
 	  myHtml += tr("</th></tr>");
-	  // myPrinter->setPageOrder(QPrinter::LastPageFirst); //????
 
 	  myHtml += tr("<tr>");
 	  for (int i = 0; i < columnCount; ++i) {
@@ -598,106 +581,6 @@ void MainWindow::printPreview(QPrinter *myPrinter) {
 	qDebug() << "qApp->applicationDirPath()" << qApp->applicationDirPath();
 	qDebug() << "qApp->applicationFilePath()" << qApp->applicationFilePath();
   }
-  //**********************************************************************
-  //ВЕРСИЯ ПО ДОКУМЕННТАЦИИ
-  //    if(model)
-  //    {
-  //        QTextDocument *doc = new QTextDocument();
-  //        //настраиваем документ
-  //        doc->setPageSize(QSizeF(myPrinter->width()/6,myPrinter->height()/6));
-  //        doc->setDocumentMargin(0);
-  //        //главный фрейм
-  //        QTextFrame *topFrame = doc->rootFrame();
-  //        QTextFrameFormat topFrameFormat = topFrame->frameFormat();
-  //        topFrameFormat.setBorder(1);
-  //        topFrameFormat.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
-  //        topFrameFormat.setBorderBrush(QBrush(Qt::black));
-
-  //        topFrame->setFrameFormat(topFrameFormat);
-
-  //        //делаю текстовый курсор
-  //        //QTextCursor cursor(doc);
-  //        QTextCursor cursor(topFrame);
-  //        //настройка блока текста для вставки
-  //        QTextBlockFormat blockFormat;
-  //        blockFormat.setBackground(QBrush(QColor(200,200,200)));
-  //        blockFormat.setAlignment(Qt::AlignCenter);
-  //        cursor.setBlockFormat(blockFormat);
-  //        //настройка шрифта для блока
-
-  //        QTextCharFormat textFormatForTopBlock;
-  //        //выбор шрифта и его настройка
-  //        QFont myFont("Helvetica");
-  //        myFont.setPointSizeF(12);
-  //        myFont.setBold(true);
-  //        myFont.setItalic(true);
-  //        textFormatForTopBlock.setFont(myFont);
-
-  //        QTextCharFormat textFormatForHeader;
-  //        QFont myFontHeader("Helvetica");
-  //        myFontHeader.setPointSizeF(8);
-  //        myFontHeader.setBold(true);
-  //        textFormatForHeader.setFont(myFontHeader);
-
-  //        QString nameTable = tr("Оснастка, учтенная отделом ОТПИ КИС-416Ц, по состоянию
-  //        на: "); nameTable += QDate::currentDate().toString("dd.MM.yyyy");
-  //        cursor.insertText(nameTable, textFormatForTopBlock);
-
-  //        QTextTableFormat myTableFormat;
-  //        myTableFormat.setCellPadding(2);
-  //        myTableFormat.setCellSpacing(0);
-  //        //myTableFormat.setAlignment(Qt::AlignCenter/* | Qt::AlignVertical_Mask*/);
-  //        //myTableFormat.setHeaderRowCount(1);
-
-  //        QTextBlockFormat cellBlockFormat;
-  //        cellBlockFormat.setAlignment(Qt::AlignCenter);
-  //        cellBlockFormat.setBackground(QBrush(Qt::yellow));
-
-  //        QTextBlockFormat cellFormat;
-
-  //        cellFormat.setAlignment(Qt::AlignCenter);
-
-  //        int row = model->rowCount(this->ui->tableViewUi->rootIndex());
-  //        int column = model->columnCount();
-
-  //        QTextTable *table = cursor.insertTable(row+1 ,column-1, myTableFormat);
-  //        //i-1 смещение для непоказа колонки с ID
-
-  //        qDebug() << "cellPadding() " << myTableFormat.cellPadding();
-  //        qDebug() << "cellSpacing() " << myTableFormat.cellSpacing();
-
-  //            for(int i = 1; i < column; ++i)
-  //            {
-  //                cursor = table->cellAt(0, i-1).firstCursorPosition(); //Возвращает
-  //                первую действительную позицию курсора в этой клетке.
-  //                cursor.insertBlock(cellBlockFormat, textFormatForHeader);
-  //                cursor.insertText(model->headerData(i, Qt::Horizontal).toString());
-  //            }
-  //            //j+1 смещение для пропуска первой заполненной строки под заголовки
-  //            for(int j = 0; j < row; ++j)
-  //              {
-  //                for(int i = 1; i < column; ++i)
-  //                  {
-  //                    if(table->cellAt(j+1, i-1).isValid())
-  //                      {
-  //                        cursor = table->cellAt(j+1, i-1).firstCursorPosition();
-  //                        cursor.insertBlock(cellFormat);
-  //                        cursor.insertText(model->data(this->ui->tableViewUi->model()->index(j,i)).toString());
-  //                      }
-  //                  }
-  ////                for(int pg = 0; pg < doc->pageCount(); ++pg)
-  ////                  {
-  ////                    if(pg+1<doc->pageCount())
-  ////                      {
-  ////                        QTextBlockFormat blockFormat;
-  //// blockFormat.setPageBreakPolicy(QTextFormat::PageBreak_AlwaysAfter); /
-  /////cursor.mergeBlockFormat(blockFormat); /                      } /                  }
-  //              }
-  //            qDebug() << "qApp->applicationDirPath()" << qApp->applicationDirPath();
-  //            qDebug() << "qApp->applicationFilePath()" << qApp->applicationFilePath();
-  //        doc->print(myPrinter);
-  //        delete doc;
-  //    }
 }
 
 void MainWindow::on_actionResetFind_triggered() {

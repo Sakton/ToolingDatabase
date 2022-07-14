@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QApplication>
 #include <QByteArray>
@@ -36,8 +35,7 @@
 #include "mysqltablemodel.h"
 
 const QString PREFIX = "otpi_";
-//const QString PATH_TO_DB = "D:/CPP/MyProects/DB_OTPI_SDI_4/TestDB.db";
-const QString PATH_TO_DB = "/DB_OTPI.db"; //файл базы данных создастся сам!!!
+const QString PATH_TO_DB = "/DB_OTPI.db";
 const QString DRIVER_DB = "QSQLITE";
 const QString MY_STYLE_CSS_FILE = ":/res/mystyle.css";
 
@@ -115,5 +113,3 @@ private:
   QSortFilterProxyModel * sortModel;
   MyForm *myEditForm;
 };
-
-#endif // MAINWINDOW_H

@@ -1,5 +1,4 @@
-#ifndef MYFORM_H
-#define MYFORM_H
+#pragma once
 
 #include <QWidget>
 #include <QDataWidgetMapper>
@@ -35,5 +34,3 @@ private:
   void initForm(MySqlTableModel *myModel);
   void init();
 };
-
-#endif // MYFORM_H
