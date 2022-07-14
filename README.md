@@ -20,5 +20,5 @@
 Люди, для которых это делалось, ушли на заслуженный отдых. Актуальность программы потеряна.
 
 ## Общий вид
-1. [Окно]()
-2. [Окошко]()
+1. [Окно](https://github.com/Sakton/ToolingDatabase/blob/main/img_for_git/1.png)
+2. [Окошко](https://github.com/Sakton/ToolingDatabase/blob/main/img_for_git/2.png)
