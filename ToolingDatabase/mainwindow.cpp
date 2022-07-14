@@ -218,10 +218,8 @@ void MainWindow::writeSettings() {
 
 void MainWindow::readSettings() {
   QSettings settings("ToolingDatabase", "MY");
-  QPoint pos = settings.value("pos", QPoint(200, 200))
-				   .toPoint();	//начальные настройки положения
-  QSize size = settings.value("size", QSize(400, 400))
-				   .toSize();  //начальные настройки размера окна
+  QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
+  QSize size = settings.value("size", QSize(400, 400)).toSize();
   this->move(pos);
   this->resize(size);
 }
