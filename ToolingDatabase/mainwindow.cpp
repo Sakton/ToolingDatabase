@@ -513,7 +513,6 @@ void MainWindow::on_actionPrinter_triggered() {
 
 void MainWindow::printPreview(QPrinter *myPrinter) {
   QAbstractItemModel *model = this->ui->tableViewUi->model();
-  qDebug() << "Пустая модель? " << model;
 
   if (model) {
 	QHeaderView *hHeader = this->ui->tableViewUi->horizontalHeader();
@@ -530,7 +529,7 @@ void MainWindow::printPreview(QPrinter *myPrinter) {
 	  myHtml += tr(
 		  "<tr style=\'font:15px; font-style:italic; "
 		  "background-color:rgb(200,200,200);\';><th colspan=13>");
-	  myHtml += tr("Оснастка, учтенная отделом ОТПИ КИС-416Ц, по состоянию на: ");
+	  myHtml += tr("Оснастка по состоянию на: ");
 	  myHtml += QDate::currentDate().toString("dd.MM.yyyy");
 	  myHtml += tr("</th></tr>");
 
@@ -575,9 +574,6 @@ void MainWindow::printPreview(QPrinter *myPrinter) {
 	doc->setHtml(myHtml);
 	doc->print(myPrinter);
 	delete doc;
-
-	qDebug() << "qApp->applicationDirPath()" << qApp->applicationDirPath();
-	qDebug() << "qApp->applicationFilePath()" << qApp->applicationFilePath();
   }
 }
 

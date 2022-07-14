@@ -14,7 +14,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    cod_ne_ispolsovann.cpp \
     finddialog.cpp \
     mysqltablemodel.cpp \
     myform.cpp
