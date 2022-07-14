@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/"/>
+    <qresource prefix="/res">
+        <file>res/stock_delete-row_8918.ico</file>
+        <file>res/edit-paste_5842.ico</file>
+        <file>mystyle.css</file>
+        <file>res/csv_file.png</file>
+        <file>res/toolbox.ico</file>
+        <file>res/printer.ico</file>
+        <file>res/view_remove_3152.ico</file>
+        <file>res/printer_1094.ico</file>
+        <file>res/edit-add_7002.ico</file>
+        <file>res/error_1644.ico</file>
+        <file>res/document-save_7797.ico</file>
+        <file>res/window_new_5749.ico</file>
+        <file>res/folder_red_open_7478.ico</file>
+        <file>res/document-save-as_3741.ico</file>
+        <file>res/exit_5866.ico</file>
+        <file>res/find_5030.ico</file>
+        <file>res/find_6699.ico</file>
+        <file>res/refresh_6569.ico</file>
+        <file>res/application-x-marble_3899.ico</file>
+        <file>res/database_9918.ico</file>
+        <file>res/gnome_apps2_5625.ico</file>
+    </qresource>
+</RCC>

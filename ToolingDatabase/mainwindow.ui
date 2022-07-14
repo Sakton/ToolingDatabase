@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>БАЗА_ДАННЫХ_ОТПИ</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/res/res/gnome_apps2_5625.ico</normaloff>:/res/res/gnome_apps2_5625.ico</iconset>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>32</width>
+    <height>32</height>
+   </size>
+  </property>
+  <property name="documentMode">
+   <bool>true</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Triangular</enum>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks</set>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTableView" name="tableViewUi">
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="acceptDrops">
+       <bool>true</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="dragEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="dragDropMode">
+       <enum>QAbstractItemView::DragDrop</enum>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectItems</enum>
+      </property>
+      <property name="textElideMode">
+       <enum>Qt::ElideMiddle</enum>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="cornerButtonEnabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+       <bool>false</bool>
+      </attribute>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1200</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>&amp;Файл</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionSaveAs"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionPasteRow"/>
+   <addaction name="actionDelRow"/>
+   <addaction name="actionFind"/>
+   <addaction name="actionResetFind"/>
+   <addaction name="actionConvertToCSV"/>
+   <addaction name="actionPrinter"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/res/window_new_5749.ico</normaloff>:/res/res/window_new_5749.ico</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Новый</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/res/folder_red_open_7478.ico</normaloff>:/res/res/folder_red_open_7478.ico</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Открыть</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/res/document-save_7797.ico</normaloff>:/res/res/document-save_7797.ico</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Сохранить</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSaveAs">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/res/document-save-as_3741.ico</normaloff>:/res/res/document-save-as_3741.ico</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Сохранить как....</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/res/exit_5866.ico</normaloff>:/res/res/exit_5866.ico</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Выход</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Q</string>
+   </property>
+  </action>
+  <action name="actionPasteRow">
+   <property name="icon">
+    <iconset theme="Правка" resource="resource.qrc">
+     <normaloff>:/res/res/edit-add_7002.ico</normaloff>:/res/res/edit-add_7002.ico</iconset>
+   </property>
+   <property name="text">
+    <string>pasteRow</string>
+   </property>
+   <property name="toolTip">
+    <string>Вставить строку</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionDelRow">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/res/error_1644.ico</normaloff>:/res/res/error_1644.ico</iconset>
+   </property>
+   <property name="text">
+    <string>-</string>
+   </property>
+   <property name="toolTip">
+    <string>Удалить строку</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionFind">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/res/find_6699.ico</normaloff>:/res/res/find_6699.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Find</string>
+   </property>
+   <property name="toolTip">
+    <string>Найти запись</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionConvertToCSV">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/res/csv_file.png</normaloff>:/res/res/csv_file.png</iconset>
+   </property>
+   <property name="text">
+    <string>convertToCSV</string>
+   </property>
+   <property name="toolTip">
+    <string>конвертировать в CSV</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+X</string>
+   </property>
+  </action>
+  <action name="actionPrinter">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/res/printer_1094.ico</normaloff>:/res/res/printer_1094.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Printer</string>
+   </property>
+   <property name="toolTip">
+    <string>Печать</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionResetFind">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/res/res/refresh_6569.ico</normaloff>:/res/res/refresh_6569.ico</iconset>
+   </property>
+   <property name="text">
+    <string>ResetFind</string>
+   </property>
+   <property name="toolTip">
+    <string>Показать все</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
+ <connections/>
+</ui>
